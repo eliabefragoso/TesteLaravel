@@ -37,7 +37,8 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $path = $request->file('url')->store('upload');
+        echo '<img src="storage/'.$path.'"/>'; 
     }
 
     /**

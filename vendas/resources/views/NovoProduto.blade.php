@@ -4,7 +4,7 @@
 
 <div class="card border">
     <div class="card-body">
-        <form action="/produtos" method="POST">
+        <form action="/produtos" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="nomeCategoria">Nome do Produto</label>
@@ -39,7 +39,7 @@
             <div class="form-group">
                         <label for="url" class="control-label">Imagem</label>
                         <div class="input-group">
-                            <input type="file" class="form-control" id="url" placeholder="url" name="image">
+                            <input type="file" class="form-control" id="url" placeholder="url" name="url">
                         </div>
                     </div>   
             <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
