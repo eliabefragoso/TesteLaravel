@@ -38,7 +38,16 @@ class ProdutoController extends Controller
     public function store(Request $request)
     {
         $path = $request->file('url')->store('upload');
-        echo '<img src="storage/'.$path.'"/>'; 
+        $prod = new produto(); 
+        $prod->nome = $request->input('nome');
+        $prod->preco = $request->input('preco');
+        $prod->quantidade = $request->input('quantidade');
+        $prod->comissao = $request->input('comissao');
+        $prod->classificacao = $request->input('classificacao');
+        $prod->url = $path;
+        $prod->save();
+
+        return redirect("/produtos");
     }
 
     /**
@@ -58,9 +67,10 @@ class ProdutoController extends Controller
      * @param  \App\produto  $produto
      * @return \Illuminate\Http\Response
      */
-    public function edit(produto $produto)
+    public function edit($id)
     {
-        //
+       $prod = produto::find($id);
+       return view('editarProduto',compact('prod'));
     }
 
     /**
@@ -70,9 +80,22 @@ class ProdutoController extends Controller
      * @param  \App\produto  $produto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, produto $produto)
+    public function update(Request $request, $id)
     {
-        //
+        $path = $request->file('url')->store('upload');
+        $prod = produto::find($id);
+       
+        Storage::delete($prod->url);  
+        
+        $prod->nome = $request->input('nome');
+        $prod->preco = $request->input('preco');
+        $prod->quantidade = $request->input('quantidade');
+        $prod->comissao = $request->input('comissao');
+        $prod->classificacao = $request->input('classificacao');
+        $prod->url = $path;
+        $prod->save();
+
+        return redirect("/produtos");
     }
 
     /**

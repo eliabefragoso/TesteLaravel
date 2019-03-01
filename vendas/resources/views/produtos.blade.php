@@ -26,13 +26,14 @@
                     <td>{{$prod->id}}</td>
                     <td>{{$prod->nome}}</td>
                     <td>{{$prod->quantidade}}  </td>
-                    <td>{{$prod->preco}}</td>
+                    <td>R$ {{number_format($prod->preco,2,",",".")}}</td>
                     <td>{{$prod->comissao}}</td>
                     <td>{{$prod->classificacao}}</td>
-                    <td><img src="{{$prod->url}}" height="50px" /></td>
+                    <td><img src="storage/{{$prod->url}}" height="50px" /></td>
+                    <td><a href="/inserirImagem/{{$prod->id}}" type="button" class="btn btn-success">Inserir Imagens</a></td>
                     <td>
-                        <a href="/produtos/editar/{{$vendedor->id}}" class="btn btn-sm btn-primary">Editar</a>
-                        <a href="/produtos/apagar/{{$vendedor->id}}" class="btn btn-sm btn-danger">Apagar</a>
+                        <a href="/produtos/editar/{{$prod->id}}" class="btn btn-sm btn-primary">Editar</a>
+                        <a href="/produtos/apagar/{{$prod->id}}" class="btn btn-sm btn-danger">Apagar</a>
                     </td>
                 </tr>
     @endforeach                
