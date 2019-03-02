@@ -104,8 +104,13 @@ class ProdutoController extends Controller
      * @param  \App\produto  $produto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(produto $produto)
+    public function destroy($id)
     {
-        //
+        $prod = produto::find($id);
+        Storage::delete($prod->url);  
+        $prod->delete();
+
+        return redirect("/produtos");
+
     }
 }
