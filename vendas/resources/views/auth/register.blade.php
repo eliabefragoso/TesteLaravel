@@ -26,10 +26,15 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="level" class="col-md-4 col-form-label text-md-right">Level</label>
+                            <label for="level" class="col-md-4 col-form-label text-md-right">Tipo de Usuario</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="number" class="form-control" name="level" value="{{ old('level') }}" >
+                                
+                                <select class="form-control" name="level">
+                                <option value="1"> Usuario Vendor Micro </option>
+                                <option value="2"> Usuario Vendor Socio </option>
+                                <option value="5"> Usuario Administrador </option>
+                                </select>
 
                               
                             </div>
