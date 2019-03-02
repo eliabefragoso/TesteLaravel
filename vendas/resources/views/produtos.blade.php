@@ -29,7 +29,7 @@
                     <td>R$ {{number_format($prod->preco,2,",",".")}}</td>
                     <td>{{$prod->comissao}}</td>
                     <td>{{$prod->classificacao}}</td>
-                    <td><img src="storage/{{$prod->url}}" height="50px" /></td>
+                    <td><img src="storage/d{{$prod->url}}" height="50px" /></td>
                     <td><a href="/inserirImagem/{{$prod->id}}" type="button" class="btn btn-success">Inserir Imagens</a></td>
                     <td>
                         <a href="/produtos/editar/{{$prod->id}}" class="btn btn-sm btn-primary">Editar</a>

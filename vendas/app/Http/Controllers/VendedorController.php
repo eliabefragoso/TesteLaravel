@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\vendedor;
 use Illuminate\Http\Request;
-
+use App\user;
 class VendedorController extends Controller
 {
     /**
@@ -14,6 +14,7 @@ class VendedorController extends Controller
      */
     public function index()
     {
+        $this->authorize('create', vendedor::class);
         $vendedores = vendedor::all();  
 
         return view('vendedor',compact('vendedores'));
@@ -26,6 +27,7 @@ class VendedorController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', vendedor::class);
         return view('NovoVendedor');
     }
 
@@ -37,6 +39,7 @@ class VendedorController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', vendedor::class);
         $vendedor = new vendedor();
 
         $vendedor->nome = $request->input('nome');
@@ -69,6 +72,8 @@ class VendedorController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('create', vendedor::class); 
+
          $vendedor = vendedor::find($id);
 
          return view('editarVendedor',compact('vendedor'));
@@ -83,6 +88,8 @@ class VendedorController extends Controller
      */
     public function update(Request $request,$id)
     {
+        $this->authorize('create', vendedor::class);   
+
         $vendedor = vendedor::find($id);
         if(isset($vendedor)){
         $vendedor->nome = $request->input('nome');
@@ -109,6 +116,8 @@ class VendedorController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('create', vendedor::class);
+
         $vendedor = vendedor::find($id);
         if(isset($vendedor)){
             $vendedor->delete();      
