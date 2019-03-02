@@ -6,18 +6,19 @@
 
   <div class="collapse navbar-collapse" id="navbar">
     <ul class="navbar-nav mr-auto">
-      <li @if($current=="home") class="nav-item active" @else class="nav-item" @endif>
-        <a class="nav-link" href="/">Home </a>
-      </li>
-      
-        
+    
         <li @if($current=="BannerPP") class="nav-item active" @else class="nav-item" @endif>
-        <a class="nav-link" href="/vendedores">Cadastro Vendedores</a>
+        <a class="nav-link" href="/vendedores">Vendedores</a>
        </li>
 
        <li @if($current=="BannerPP") class="nav-item active" @else class="nav-item" @endif>
-        <a class="nav-link" href="/produtos">Cadastro Produtos</a>
+        <a class="nav-link" href="/produtos"> Produtos</a>
        </li>
+
+       <li @if($current=="categorias") class="nav-item active" @else class="nav-item" @endif>
+        <a class="nav-link" href="/categorias">Categorias </a>
+      </li>
+
     </ul>
 
   </div>

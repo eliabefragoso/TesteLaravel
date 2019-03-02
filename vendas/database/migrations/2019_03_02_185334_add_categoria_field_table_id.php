@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLevelFieldTableLevel extends Migration
+class AddCategoriaFieldTableId extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddLevelFieldTableLevel extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('level')->nullable()->after('remember_token')->default('2');
+        Schema::table('produtos', function (Blueprint $table) {
+            $table->integer('categoria_id')->unsigned()->after('created_at');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
         });
     }
 
@@ -25,7 +26,7 @@ class AddLevelFieldTableLevel extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('produtos', function (Blueprint $table) {
             //
         });
     }

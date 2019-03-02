@@ -37,7 +37,14 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        $path = $request->file('url')->store('upload');
+        $p =  $request->file('url');
+        if(isset($p)){
+            $path = $request->file('url')->store('upload');
+        }else{
+            $path = '0';
+        }
+
+        
         $prod = new produto(); 
         $prod->nome = $request->input('nome');
         $prod->preco = $request->input('preco');
@@ -45,6 +52,7 @@ class ProdutoController extends Controller
         $prod->comissao = $request->input('comissao');
         $prod->classificacao = $request->input('classificacao');
         $prod->url = $path;
+        $prod->categoria_id = $request->input('categoria_id');
         $prod->save();
 
         return redirect("/produtos");

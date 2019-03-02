@@ -1,6 +1,13 @@
 @extends('layout.app', ["current" => "produtos"])
 
 @section('body')
+<?php 
+        use App\Categoria;
+        $cats = Categoria::all();
+        
+
+?>
+
 
 <div class="card border">
     <div class="card-body">
@@ -42,6 +49,20 @@
                             <input type="file" class="form-control" id="url" placeholder="url" name="url">
                         </div>
                     </div>   
+
+                    <div class="form-group">
+                        <label for="categoriaProduto" class="control-label">Categoria</label>
+                        <div class="input-group">
+                           
+                            <select class="form-control" name="categoria_id"> 
+                                 @foreach($cats as $cat)
+                                <option value="{{$cat->id}}"> {{$cat->nome}}</option>
+                                 @endforeach 
+                            </select>
+                    
+                        </div>
+                    </div>  
+
             <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
             <button type="cancel" class="btn btn-danger btn-sm">Cancel</button>
         </form>

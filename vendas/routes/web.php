@@ -41,7 +41,14 @@ Route::get('/imagem/apagar/{id}',"ImagemController@destroy");
 Route::get('/imagem/novo/{id}', "ImagemController@create");
 Route::get('/inserirImagem/{id}', "ImagemController@index");
 
+//Rotas para Categorias 
 
+Route::get('/categorias', 'ControladorCategoria@index')->middleware(['auth']);
+Route::get('/categorias/novo', 'ControladorCategoria@create')->middleware(['auth']);
+Route::post('/categorias', 'ControladorCategoria@store')->middleware(['auth']);
+Route::get('/categorias/apagar/{id}', 'ControladorCategoria@destroy')->middleware(['auth']);
+Route::get('/categorias/editar/{id}', 'ControladorCategoria@edit')->middleware(['auth']);
+Route::post('/categorias/{id}', 'ControladorCategoria@update')->middleware(['auth']);
 
 Auth::routes();
 
