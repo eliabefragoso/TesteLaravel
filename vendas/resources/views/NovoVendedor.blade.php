@@ -13,9 +13,16 @@
             </div>
             <div class="form-group">
                 <label for="nomeCategoria">Tipo de Vendedor</label>
-                <select class="form-control" name="tipo"> 
+                <select class="form-control" name="tipo" id="tipo"> 
+                            <option value="0"> Selecione o Tipo de Vendedor </option>
                             <option value="1"> Vendedor Micro </option>
                             <option value="2"> Vendedor Socio </option>  
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nomeCategoria">Selecione Usuario Vendedor</label>
+                <select class="form-control" name="user_id" id="user_id"> 
+                             
                 </select>
             </div>
             <div class="form-group">
@@ -43,5 +50,55 @@
         </form>
     </div>
 </div>
+
+@endsection
+@section('javascript')
+<script type="text/javascript">
+    
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        }
+    });
+
+    $(function(){
+			$('#tipo').change(function(){
+                //console.log("deu nop");
+                if($("#tipo").val()==1){
+                    $("#user_id option").remove();
+                    vendedor_micro(); 
+                }else{
+                    $("#user_id option").remove();
+                    Vendedor_socio();
+                    
+                }
+                    
+			});
+		});
+
+    function vendedor_micro() {
+        $.getJSON('/api/VendedorMicro', function(data) { 
+            for(i=0;i<data.length;i++) {
+                opcao = '<option value ="' + data[i].id + '">' + 
+                    data[i].name + '</option>';
+                   
+                $('#user_id').append(opcao);
+            }
+        });
+    }
+
+
+    function Vendedor_socio() {
+        $.getJSON('/api/VendedorSocio', function(data) { 
+            for(i=0;i<data.length;i++) {
+                opcao = '<option value ="' + data[i].id + '">' + 
+                    data[i].name + '</option>';
+                   
+                $('#user_id').append(opcao);
+            }
+        });
+    }
+
+  </script>   
 
 @endsection

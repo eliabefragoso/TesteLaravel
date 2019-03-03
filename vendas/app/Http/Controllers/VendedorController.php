@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\vendedor;
 use Illuminate\Http\Request;
-use App\user;
+use App\User;
 class VendedorController extends Controller
 {
     /**
@@ -48,6 +48,8 @@ class VendedorController extends Controller
         $vendedor->numero = $request->input('numero');
         $vendedor->bairro = $request->input('bairro');
         $vendedor->cep = $request->input('cep');
+        $vendedor->user_id = $request->input('user_id');
+        
         $vendedor->save();
 
         return redirect('/vendedores');
@@ -125,5 +127,21 @@ class VendedorController extends Controller
         }else{
             return respose("vendedor não encontrado",404);
         }   
-    }
+    } 
+ 
+
+    public function MicroVendedorJson()
+    {
+         $vendedor = User::where('level','1')->get();
+        return json_encode($vendedor);
+    }    
+    
+
+    public function SocioVendedorJson()
+    {
+         $vendedor = User::where('level','2')->get();
+        return json_encode($vendedor);
+    }    
+
+
 }
