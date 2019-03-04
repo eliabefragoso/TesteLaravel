@@ -1,6 +1,10 @@
 <html>
     <head>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+        @hasSection('css')
+        @yield('css')
+        @endif
         <title>Cadastro</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <style>

@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 
@@ -32,6 +32,7 @@ Route::get('/produtos', 'ProdutoController@index');
 Route::get('/produtos/novo', 'ProdutoController@create');
 Route::get('/produtos/editar/{id}', 'ProdutoController@edit');
 Route::get('/produtos/apagar/{id}', 'ProdutoController@destroy');
+Route::get('/produtos/estoque/vendedor', 'ProdutoController@EstoqueVendedor');
 //post 
 Route::post('/produtos/{id}', 'ProdutoController@update');
 Route::post('/produtos', 'ProdutoController@store');

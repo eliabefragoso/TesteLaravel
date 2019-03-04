@@ -121,4 +121,10 @@ class ProdutoController extends Controller
         return redirect("/produtos");
 
     }
+
+   public function EstoqueVendedor(){
+    $produtos = produto::all();  
+       return view("estoque",compact('produtos'));
+   }  
+
 }
