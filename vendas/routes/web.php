@@ -51,6 +51,11 @@ Route::get('/categorias/apagar/{id}', 'ControladorCategoria@destroy')->middlewar
 Route::get('/categorias/editar/{id}', 'ControladorCategoria@edit')->middleware(['auth']);
 Route::post('/categorias/{id}', 'ControladorCategoria@update')->middleware(['auth']);
 
+//Rotas para Clientes.
+
+Route::get('/clientes/novo', 'ClienteController@create');
+
+//rotas de administração
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

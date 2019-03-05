@@ -14,6 +14,11 @@
         <form action="/produtos/{{$prod->id}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <label for="nomeCategoria">Codigo do Produto</label>
+                <input type="text" class="form-control" name="codigo" 
+                       id="codigoProduto" valeu="{{$prod->codigo}}">
+            </div> 
+            <div class="form-group">
                 <label for="nomeCategoria">Nome do Produto</label>
                 <input type="text" class="form-control" name="nome" 
                        id="nomeProduto" placeholder="Nome" value="{{$prod->nome}}">

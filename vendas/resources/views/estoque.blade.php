@@ -27,9 +27,9 @@ $vendedores = vendedor::all();
                 <tr>
                 <th>Código</th>
                     <th>Nome do Produto</th>
-                    <th>Preço</th>
-                    <th>Comissão</th>
                     <th>Imagem</th>
+                    <th>Preço</th>
+                    <th>Comissão</th>                  
                     <th>Quantidade</th>
                     
                     
@@ -65,17 +65,17 @@ $vendedores = vendedor::all();
             <tbody>
     @foreach($produtos as $prod)
                 <tr>
-                    <td>{{$prod->id}}</td>
+                    <td>{{$prod->codigo}}</td>
                     <td>{{$prod->nome}}</td>
                     <td>{{$prod->quantidade}}  </td>
                     <td>R$ {{number_format($prod->preco,2,",",".")}}</td>
-                    <td>{{$prod->comissao}}%</td>
+                    <td>R$ {{number_format($prod->comissao,2,",",".")}}</td>
                     <td>{{$prod->classificacao}}</td>
                     <td><img src="../../storage/{{$prod->url}}" height="50px" /></td>
                     <td>            <form id="formProduto" enctype="multipart/form-data">
 <input type="number" name="quantidade" id="quantidade{{$prod->id}}"></form></td> 
                     <td>
-                        <button class="btn btn-sm btn-primary" onclick="adicionar({{$prod->id}},'{{$prod->nome}}', {{$prod->preco}}, '{{$prod->comissao}}%', '{{$prod->url}}')">Adicionar</button>
+                        <button class="btn btn-sm btn-primary" onclick="adicionar({{$prod->id}},'{{$prod->codigo}}','{{$prod->nome}}', {{$prod->preco}}, '{{$prod->comissao}}%', '{{$prod->url}}')">Adicionar</button>
                        
                     </td>
                 </tr>
@@ -102,21 +102,36 @@ $vendedores = vendedor::all();
     var estoque = new Array();
     function montarLinha(p) {
         var linha = "<tr>" +
-            "<td>" + p.id + "</td>" +
+            "<td>" + p.codigo + "</td>" +
             '<td>' + p.nome + " </td>" +
-            "<td>" + p.preco + "</td>" +
-            "<td id='preco'>" + p.comissao + "</td>" +
             "<td><img src='../../storage/"+p.url+"' height='50px' alt='"+p.nome+"'/></td>" +
+            "<td>" + p.preco + "</td>" +
+            "<td id='preco'>" + p.comissao + "</td>" +            
             '<td>'+p.quantidade+'</td>' +
             
             "</tr>";
         return linha;
     }
 
-function adicionar(id, nome, preco, comissao, imagem){
+
+    function montarLinha2(p) {
+        var linha = "<tr>" +
+            "<td>" + p.codigo+ "</td>" +
+            '<td>' + p.nome + " </td>" +
+            "<td><img src='../../storage/"+p.url+"' height='50px' alt='"+p.nome+"'/></td>" +
+            "<td>" + p.preco + "</td>" +
+            "<td id='preco'>" + p.comissao + "</td>" +           
+            '<td>'+p.pivot.estoque+'</td>' +
+            
+            "</tr>";
+        return linha;
+    }
+
+function adicionar(id,codigo, nome, preco, comissao, imagem){
     quantidade = "#quantidade"+id;
    prod = {
           id:id,
+          codigo:codigo,
           nome:nome,
           preco:preco,
           comissao:comissao,
@@ -131,6 +146,7 @@ function adicionar(id, nome, preco, comissao, imagem){
                 $('#tabelaestoque>tbody').append(linha);
 
                 estoque.push(prod);
+                //console.log(prod);
                 
               
 }
@@ -154,7 +170,8 @@ $('#tabelaestoque>tbody>').closest('tr').remove()
    if($("#vendedor").val()!='0'){
     $.getJSON('/api/preencherestoque/'+$("#vendedor").val(), function(data) { 
                 for(i=0;i<data.length;i++){
-                    linha = montarLinha(data[i]);
+                   // console.log(data[i]);
+                    linha = montarLinha2(data[i]);
                     $('#tabelaestoque>tbody').append(linha);
                 }
         });
@@ -166,7 +183,7 @@ function LimparEstoque(){
             url: "/api/remover/" + $("#vendedor").val(),
             context: this,
             success: function() {
-                console.log('Apagou OK');
+              //  console.log('Apagou OK');
                $('#tabelaestoque>tbody>').closest('tr').remove();
                 }
                 

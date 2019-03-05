@@ -13,6 +13,11 @@
         <form action="/produtos" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <label for="nomeCategoria">Codigo do Produto</label>
+                <input type="text" class="form-control" name="codigo" 
+                       id="codigoProduto" placeholder="codigo">
+            </div>   
+            <div class="form-group">
                 <label for="nomeCategoria">Nome do Produto</label>
                 <input type="text" class="form-control" name="nome" 
                        id="nomeProduto" placeholder="Nome">

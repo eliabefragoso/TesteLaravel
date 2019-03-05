@@ -16,6 +16,7 @@ class ProdutoController extends Controller
      */
     public function index()
     {
+        $this->authorize('create', vendedor::class);
         $produtos = produto::all();  
 
         return view('produtos',compact('produtos'));
@@ -28,6 +29,7 @@ class ProdutoController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', vendedor::class); 
         return view('NovoProduto');
     }
 
@@ -39,6 +41,7 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', vendedor::class);
         $p =  $request->file('url');
         if(isset($p)){
             $path = $request->file('url')->store('upload');
@@ -48,6 +51,7 @@ class ProdutoController extends Controller
 
         
         $prod = new produto(); 
+        $prod->codigo = $request->input('codigo');
         $prod->nome = $request->input('nome');
         $prod->preco = $request->input('preco');
         $prod->quantidade = $request->input('quantidade');
@@ -79,6 +83,7 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
+       $this->authorize('create', vendedor::class); 
        $prod = produto::find($id);
        return view('editarProduto',compact('prod'));
     }
@@ -91,20 +96,44 @@ class ProdutoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $path = $request->file('url')->store('upload');
-        $prod = produto::find($id);
-       
-        Storage::delete($prod->url);  
+    {  
+        $this->authorize('create', vendedor::class);
+        $p =  $request->file('url');
+        if(isset($p)){
+            $path = $request->file('url')->store('upload');
+            $prod = produto::find($id);
         
-        $prod->nome = $request->input('nome');
-        $prod->preco = $request->input('preco');
-        $prod->quantidade = $request->input('quantidade');
-        $prod->comissao = $request->input('comissao');
-        $prod->classificacao = $request->input('classificacao');
-        $prod->url = $path;
-        $prod->save();
+            Storage::delete($prod->url);  
+            $prod->codigo = $request->input('codigo');
+            $prod->nome = $request->input('nome');
+            $prod->preco = $request->input('preco');
+            $prod->quantidade = $request->input('quantidade');
+            $prod->comissao = $request->input('comissao');
+            $prod->classificacao = $request->input('classificacao');
+            $prod->url = $path;
+            $prod->save();
+        }else{
+            $path = '0';
+            $prod = produto::find($id);
+            if($prod->url!='0'){
+                Storage::delete($prod->url);  
+            }
 
+            $prod->codigo = $request->input('codigo');
+            $prod->nome = $request->input('nome');
+            $prod->preco = $request->input('preco');
+            $prod->quantidade = $request->input('quantidade');
+            $prod->comissao = $request->input('comissao');
+            $prod->classificacao = $request->input('classificacao');
+            $prod->url = $path;
+            $prod->save();
+    
+        }
+        
+       
+        
+       
+       
         return redirect("/produtos");
     }
 
@@ -116,6 +145,7 @@ class ProdutoController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('create', vendedor::class);
         $prod = produto::find($id);
         Storage::delete($prod->url);  
         $prod->delete();
@@ -125,7 +155,8 @@ class ProdutoController extends Controller
     }
 
    public function EstoqueVendedor(){
-    $produtos = produto::all();  
+    $this->authorize('create', vendedor::class);
+       $produtos = produto::all();  
        return view("estoque",compact('produtos'));
    }  
    public function EstoqueJson(Request $request){

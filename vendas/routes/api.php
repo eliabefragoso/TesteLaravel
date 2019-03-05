@@ -24,3 +24,5 @@ Route::get('/VendedorSocio', 'VendedorController@SocioVendedorJson');
 Route::post('/estoque', 'ProdutoController@EstoqueJson');
 Route::get('/preencherestoque/{id}', 'VendedorController@PreencherestoqueJson');
 Route::put('/remover/{id}', 'ProdutoController@esvaziarEstoqueJson');
+Route::get('/cep', 'RuaController@cepJson');
+Route::get('/rua/{cep}', 'RuaController@ruaJson');
