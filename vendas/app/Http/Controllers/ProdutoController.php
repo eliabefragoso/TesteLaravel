@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\produto;
+use App\vendedor;
 use Illuminate\Http\Request;
 use Storage;
+use App\vendedores_has_produtos;
 class ProdutoController extends Controller
 {
     /**
@@ -126,5 +128,20 @@ class ProdutoController extends Controller
     $produtos = produto::all();  
        return view("estoque",compact('produtos'));
    }  
+   public function EstoqueJson(Request $request){
+         $estoque = new vendedores_has_produtos(); 
+         $estoque->vendedor_id = $request->vendedor_id;
+         $estoque->produto_id = $request->id;
+         $estoque->estoque = $request->quantidade;
+         $estoque->save();
+
+         $vendedor_estoque = vendedores_has_produtos::all();
+         echo json_encode($vendedor_estoque);   
+   }
+
+  public function esvaziarEstoqueJson($id){
+            $esvaziar = vendedores_has_produtos::where('vendedor_id', $id)->delete();
+            
+  }
 
 }

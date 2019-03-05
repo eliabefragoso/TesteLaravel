@@ -1,195 +1,176 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-   
-	<title>Cadastrar Produtos no estoque do Vendedor</title>
+@extends('layout.app', ["current" => "Estoque"])
 
-	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-    <link href="{{ asset('css/menu.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/fresh-bootstrap-table.css') }}" rel="stylesheet" />
-     
-    <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-      
-</head>
-<body>
+@section('body')
+<?php 
 
-<nav>
-  <ul class="primaria">
-    <li>
-    <a href="/vendedores">Vendedores</a>
-      
-    </li>
-    <li>
-    <a  href="/produtos"> Produtos</a>
-     
-    </li>
-    <li>
-    <a  href="/categorias">Categorias </a>
-      
-    </li>
-    <li>
-      <a href="/produtos/estoque/vendedor">Estoque Vendedores</a>
-    </li>
-    <li>
-    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-     
-    </li>
-  </ul>
-</nav>
-
-
-<div class="wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                                
-                <div class="fresh-table full-color-blue">
-                <!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange                  
-                        Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
-                -->
-                
-                    <div class="toolbar">
-                                    
-                    <button id="alertBtn" class="btn btn-default">Salvar</button>
-                    </div>
+use App\vendedor;
+$vendedores = vendedor::all();
+?>
+<div class="card border">
+    <div class="card-body">
+        <h5 class="card-title">Preecha o Estoque do vendedor / Selecione o vendedor:
+        @if(count($vendedores)>0)  
+        <form id="form" enctype="multipart/form-data">
+           <select name="vendedor" id="vendedor" onclick="preencherEstoque();">
+           <option value="0"> Selecione o vendedor </option>
+                @foreach($vendedores as $vendedor)  
+             <option value="{{$vendedor->id}}"> {{$vendedor->nome}} </option>  
+                @endforeach
+            </select> 
+            </form>
+         @endif                                  
+         </h5>
+  
+         @if(count($produtos) > 0)
+        <table class="table table-ordered table-hover" id="tabelaestoque">
+            <thead>
+                <tr>
+                <th>Código</th>
+                    <th>Nome do Produto</th>
+                    <th>Preço</th>
+                    <th>Comissão</th>
+                    <th>Imagem</th>
+                    <th>Quantidade</th>
                     
-                    <table id="fresh-table" class="table">
-                               
-                        <thead>
-                            <th data-field="id">ID</th>
-                        	<th data-field="name" data-sortable="true">Nome</th>
-                        	<th data-field="salary" data-sortable="true">Preço</th>
-                        	<th data-field="country" data-sortable="true">Quantidade Disponivel</th>
-                            <th data-field="city">Comissão</th>
-                            <th data-field="quantidade">Quantidade</th>
-                        	<th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
-                        </thead>
-                        <tbody>
-                        @foreach($produtos as $prod)
-                            <tr>
-                            	<td>{{$prod->id}}</td>
-                            	<td>{{$prod->nome}}</td>
-                            	<td>R$ {{number_format($prod->preco,2,",",".")}}</td>
-                            	<td>{{$prod->quantidade}} </td>
-                                <td>{{$prod->comissao}}%</td>
-                                <td>0000</td>
-                            	<td></td>
-                            </tr>
-                            @endforeach 
-                        </tbody>
-                    </table>
-                </div>
-                
-                
-            </div>
-        </div>
+                    
+                   
+                </tr>
+            </thead>
+            <tbody>
+         
+            </tbody>
+        </table>
+@endif        
     </div>
-</div>
+    <div class="card-footer">
+        <button onclick="SalvarEstoque()" class="btn btn-sm btn-primary" role="button">Salvar Estoque</button> /  <button onclick="LimparEstoque()" class="btn btn-sm btn-danger" role="button">Limpar Estoque</button>
+    </div>
+</div>        
 
-</body>
-    <script type="text/javascript" src="{{ asset('js/jquery-1.11.2.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap-table.js')}}"></script>
+@if(count($produtos) > 0)
+        <table class="table table-ordered table-hover">
+            <thead>
+                <tr>
+                <th>Código</th>
+                    <th>Nome do Produto</th>
+                    <th>Quantidade Disponivel</th>
+                    <th>Preço</th>
+                    <th>Comissão</th>
+                    <th>Classificação</th>
+                    <th>Imagem</th>
+                    
+                    <th> Adicionar Produto</th>
+                </tr>
+            </thead>
+            <tbody>
+    @foreach($produtos as $prod)
+                <tr>
+                    <td>{{$prod->id}}</td>
+                    <td>{{$prod->nome}}</td>
+                    <td>{{$prod->quantidade}}  </td>
+                    <td>R$ {{number_format($prod->preco,2,",",".")}}</td>
+                    <td>{{$prod->comissao}}%</td>
+                    <td>{{$prod->classificacao}}</td>
+                    <td><img src="../../storage/{{$prod->url}}" height="50px" /></td>
+                    <td>            <form id="formProduto" enctype="multipart/form-data">
+<input type="number" name="quantidade" id="quantidade{{$prod->id}}"></form></td> 
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="adicionar({{$prod->id}},'{{$prod->nome}}', {{$prod->preco}}, '{{$prod->comissao}}%', '{{$prod->url}}')">Adicionar</button>
+                       
+                    </td>
+                </tr>
+    @endforeach                
+            </tbody>
+        </table>
+@endif        
+    </div>
+  
 
-    <script type="text/javascript">
-        var $table = $('#fresh-table'),
-            $alertBtn = $('#alertBtn'),
-            full_screen = false;
-            
-        $().ready(function(){
-            $table.bootstrapTable({
-                toolbar: ".toolbar",
+
+
+@endsection
+
+@section('javascript')
+<script type="text/javascript">
     
-                showRefresh: true,
-                search: true,
-                showToggle: true,
-                showColumns: true,
-                pagination: true,
-                striped: true,
-                pageSize: 8,
-                pageList: [8,10,25,50,100],
-                
-                formatShowingRows: function(pageFrom, pageTo, totalRows){
-                    //do nothing here, we don't want to show the text "showing x of y from..." 
-                },
-                formatRecordsPerPage: function(pageNumber){
-                    return pageNumber + " rows visible";
-                },
-                icons: {
-                    refresh: 'fa fa-refresh',
-                    toggle: 'fa fa-th-list',
-                    columns: 'fa fa-columns',
-                    detailOpen: 'fa fa-plus-circle',
-                    detailClose: 'fa fa-minus-circle'
-                }
-            });
-            
-                        
-            
-            $(window).resize(function () {
-                $table.bootstrapTable('resetView');
-            });
-    
-            
-            window.operateEvents = {
-                'click .like': function (e, value, row, index) {
-                    alert('You click like icon, row: ' + JSON.stringify(row));
-                    console.log(value, row, index);
-                },
-                'click .edit': function (e, value, row, index) {
-                    alert('You click edit icon, row: ' + JSON.stringify(row));
-                    console.log(value, row, index);    
-                },
-                'click .remove': function (e, value, row, index) {
-                    $table.bootstrapTable('remove', {
-                        field: 'id',
-                        values: [row.id]
-                    });
-            
-                }
-            };
-            
-            $alertBtn.click(function () {
-                alert("You pressed on Alert");
-            });
-            
-        });
-            
-    
-        function operateFormatter(value, row, index) {
-            return [
-                '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
-                    '<i class="fa fa-heart"></i>',
-                '</a>',
-                '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
-                    '<i class="fa fa-edit"></i>',
-                '</a>',
-                '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
-                    '<i class="fa fa-remove"></i>',
-                '</a>'
-            ].join('');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
         }
+    });
     
+    var estoque = new Array();
+    function montarLinha(p) {
+        var linha = "<tr>" +
+            "<td>" + p.id + "</td>" +
+            '<td>' + p.nome + " </td>" +
+            "<td>" + p.preco + "</td>" +
+            "<td id='preco'>" + p.comissao + "</td>" +
+            "<td><img src='../../storage/"+p.url+"' height='50px' alt='"+p.nome+"'/></td>" +
+            '<td>'+p.quantidade+'</td>' +
             
-    </script>
-</html>
+            "</tr>";
+        return linha;
+    }
+
+function adicionar(id, nome, preco, comissao, imagem){
+    quantidade = "#quantidade"+id;
+   prod = {
+          id:id,
+          nome:nome,
+          preco:preco,
+          comissao:comissao,
+          url:imagem,
+          quantidade:$(quantidade).val(),
+          vendedor_id:$("#vendedor").val() 
+          
+           
+   };
+                linha = montarLinha(prod);
+               
+                $('#tabelaestoque>tbody').append(linha);
+
+                estoque.push(prod);
+                
+              
+}
+
+
+function SalvarEstoque(){
+    for(i=0;i<estoque.length;i++) {
+               
+           
+    $.post("/api/estoque", estoque[i], function(data) {
+             
+        });
+       
+    }
+    alert("Estoque Salvo com Sucesso!");
+}
+
+function preencherEstoque(){
+
+$('#tabelaestoque>tbody>').closest('tr').remove()
+   if($("#vendedor").val()!='0'){
+    $.getJSON('/api/preencherestoque/'+$("#vendedor").val(), function(data) { 
+                for(i=0;i<data.length;i++){
+                    linha = montarLinha(data[i]);
+                    $('#tabelaestoque>tbody').append(linha);
+                }
+        });
+    }
+}
+function LimparEstoque(){
+    $.ajax({
+            type: "PUT",
+            url: "/api/remover/" + $("#vendedor").val(),
+            context: this,
+            success: function() {
+                console.log('Apagou OK');
+               $('#tabelaestoque>tbody>').closest('tr').remove();
+                }
+                
+        });
+}
+</script> 
+@endsection    

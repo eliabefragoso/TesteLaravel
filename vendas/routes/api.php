@@ -21,3 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/VendedorMicro', 'VendedorController@MicroVendedorJson');
 
 Route::get('/VendedorSocio', 'VendedorController@SocioVendedorJson');
+Route::post('/estoque', 'ProdutoController@EstoqueJson');
+Route::get('/preencherestoque/{id}', 'VendedorController@PreencherestoqueJson');
+Route::put('/remover/{id}', 'ProdutoController@esvaziarEstoqueJson');

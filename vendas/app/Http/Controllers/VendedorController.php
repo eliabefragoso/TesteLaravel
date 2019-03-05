@@ -143,5 +143,10 @@ class VendedorController extends Controller
         return json_encode($vendedor);
     }    
 
+    public function PreencherestoqueJson($id){
+        $tabela= vendedor::find($id)->produtos()->get(); 
+        echo json_encode($tabela);                     
+      }
+
 
 }
