@@ -28,3 +28,5 @@ Route::get('/cep', 'RuaController@cepJson');
 Route::get('/rua/{cep}', 'RuaController@ruaJson');
 Route::get('/cidade','CidadeController@cidadeJson');
 Route::get('/estado','EstadoController@estadoJson');
+
+Route::post('/telefone','TelefoneController@store');

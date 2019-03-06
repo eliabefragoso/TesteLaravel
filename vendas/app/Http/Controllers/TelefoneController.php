@@ -22,9 +22,10 @@ class TelefoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($cliente_id)
     {
-        //
+         // echo $cliente_id;
+        return view('telefone',compact('cliente_id'));
     }
 
     /**
@@ -35,7 +36,17 @@ class TelefoneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $phone = new telefone();
+        $phone->ddd = $request->input('ddd');
+        $phone->numero = $request->input('numero');
+        $phone->operadora = $request->input('operadora');
+        $phone->tipo = $request->input('tipo');
+        $phone->cliente_id = $request->input('cliente_id');
+        $phone->save(); 
+         
+        $alert = "Numero do cliente cadastrado com sucesso.  Sistema pronto para cadastrar novo numero!";
+       
+        return json_encode($alert);
     }
 
     /**

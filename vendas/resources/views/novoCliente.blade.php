@@ -4,7 +4,7 @@
 
 <div class="card border">
     <div class="card-body">
-        <form action="/clientes" method="POST">
+        <form action="/clientes" method="POST" enctype="multipart/form-data">
             @csrf            
             <div class="form-group">
                 <label for="nomeCategoria">Nome do cliente:</label>

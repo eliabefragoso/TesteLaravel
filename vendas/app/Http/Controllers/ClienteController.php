@@ -112,7 +112,7 @@ class ClienteController extends Controller
                     
                     
                                 $selectClientes = Cliente::where([['cpf',$request->input('cpf')],['endereco_id',$selectEndereco[0]->id]])->get();
-                                return view('telefone',compact('selectClientes'));  
+                                return redirect('/telefone/'.$selectClientes[0]->id);
                                }
                         }else{
                             $cadastrarRua = new Rua();
@@ -151,7 +151,7 @@ class ClienteController extends Controller
                 
                 
                             $selectClientes = Cliente::where([['cpf',$request->input('cpf')],['endereco_id',$selectEndereco[0]->id]])->get();
-                            return view('telefone',compact('selectClientes'));   
+                            return redirect('/telefone/'.$selectClientes[0]->id);
                         }      
                     }else{
                         
@@ -196,7 +196,7 @@ class ClienteController extends Controller
             
             
                         $selectClientes = Cliente::where([['cpf',$request->input('cpf')],['endereco_id',$selectEndereco[0]->id]])->get();
-                        return view('telefone',compact('selectClientes'));   
+                        return redirect('/telefone/'.$selectClientes[0]->id);
 
                     }   
              }else{
@@ -246,7 +246,7 @@ class ClienteController extends Controller
     
     
                 $selectClientes = Cliente::where([['cpf',$request->input('cpf')],['endereco_id',$selectEndereco[0]->id]])->get();
-                return view('telefone',compact('selectClientes'));   
+                return redirect('/telefone/'.$selectClientes[0]->id);  
 
              }
 
@@ -302,7 +302,7 @@ class ClienteController extends Controller
 
 
             $selectClientes = Cliente::where([['cpf',$request->input('cpf')],['endereco_id',$selectEndereco[0]->id]])->get();
-            return view('telefone',compact('selectClientes'));    
+            return redirect('/telefone/'.$selectClientes[0]->id);   
              
              
              
