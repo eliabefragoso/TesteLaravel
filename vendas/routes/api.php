@@ -26,3 +26,5 @@ Route::get('/preencherestoque/{id}', 'VendedorController@PreencherestoqueJson');
 Route::put('/remover/{id}', 'ProdutoController@esvaziarEstoqueJson');
 Route::get('/cep', 'RuaController@cepJson');
 Route::get('/rua/{cep}', 'RuaController@ruaJson');
+Route::get('/cidade','CidadeController@cidadeJson');
+Route::get('/estado','EstadoController@estadoJson');

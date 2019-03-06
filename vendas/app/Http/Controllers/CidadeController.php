@@ -82,4 +82,9 @@ class CidadeController extends Controller
     {
         //
     }
+
+    public function cidadeJson(){
+        $cidades = cidade::all();
+        return json_encode($cidades);
+    }
 }

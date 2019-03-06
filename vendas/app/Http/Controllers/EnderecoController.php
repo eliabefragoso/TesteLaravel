@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Estado;
+use App\endereco;
 use Illuminate\Http\Request;
 
-class EstadoController extends Controller
+class EnderecoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class EstadoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Estado  $estado
+     * @param  \App\endereco  $endereco
      * @return \Illuminate\Http\Response
      */
-    public function show(Estado $estado)
+    public function show(endereco $endereco)
     {
         //
     }
@@ -52,10 +52,10 @@ class EstadoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Estado  $estado
+     * @param  \App\endereco  $endereco
      * @return \Illuminate\Http\Response
      */
-    public function edit(Estado $estado)
+    public function edit(endereco $endereco)
     {
         //
     }
@@ -64,10 +64,10 @@ class EstadoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Estado  $estado
+     * @param  \App\endereco  $endereco
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Estado $estado)
+    public function update(Request $request, endereco $endereco)
     {
         //
     }
@@ -75,16 +75,11 @@ class EstadoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Estado  $estado
+     * @param  \App\endereco  $endereco
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Estado $estado)
+    public function destroy(endereco $endereco)
     {
         //
-    }
-
-    public function estadoJson(){
-        $estado = estado::all();
-        return json_encode($estado);
     }
 }

@@ -54,7 +54,7 @@ Route::post('/categorias/{id}', 'ControladorCategoria@update')->middleware(['aut
 //Rotas para Clientes.
 
 Route::get('/clientes/novo', 'ClienteController@create');
-
+Route::post('/clientes', 'ClienteController@store');
 //rotas de administração
 Auth::routes();
 

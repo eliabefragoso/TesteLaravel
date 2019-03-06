@@ -23,11 +23,7 @@ class CreateClientesTable extends Migration
             $table->date('nascimento');
             $table->string('estado_civil');
             $table->string('sexo');
-            $table->integer('dependentes');
-            $table->integer('bairro_id')->unsigned();             
-            $table->integer('rua_id')->unsigned();  
-            $table->foreign('bairro_id')->references('id')->on('bairros');
-            $table->foreign('rua_id')->references('id')->on('ruas');          
+            $table->integer('dependentes');                  
             $table->timestamps();
         });
     }

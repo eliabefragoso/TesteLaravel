@@ -22,6 +22,11 @@
                        id="rg" placeholder="RG">
             </div>
             <div class="form-group">
+                <label for="nomeCategoria">Foto:</label>
+                <input type="file" class="form-control" name="foto" 
+                       id="foto" placeholder="foto">
+            </div>
+            <div class="form-group">
                 <label for="nomeCategoria">E-mail:</label>
                 <input type="text" class="form-control" name="email" 
                        id="email" placeholder="E-mail">
@@ -33,6 +38,11 @@
                             <option value="Feminino"> Feminino </option>
                             <option value="Outro"> Outro </option>  
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="nomeCategoria">Data de Nascimento:</label>
+                <input type="date" class="form-control" name="nascimento" 
+                       id="nascimento" >
             </div>
             <div class="form-group">
                 <label for="nomeCategoria">Estado Civil:</label>
@@ -54,11 +64,16 @@
                 <label for="nomeCategoria">CEP:</label>
                 <input type="text" class="form-control" name="CEP" 
                        id="autocomplete" placeholder="CEP">
-            </div>
+            </div>            
             <div class="form-group">
-                <label for="nomeCategoria">Rua:</label>
-                <input type="text" class="form-control" name="rua" 
-                       id="rua" placeholder="Rua">
+                <label for="nomeCategoria">Estado:</label>
+                <input type="text" class="form-control" name="estado" 
+                       id="estado" placeholder="estado">
+            </div>  
+            <div class="form-group">
+                <label for="nomeCategoria">Cidade:</label>
+                <input type="text" class="form-control" name="cidade" 
+                       id="cidade" placeholder="cidade">
             </div>
             <div class="form-group">
                 <label for="nomeCategoria">Bairro:</label>
@@ -66,10 +81,22 @@
                        id="bairro" placeholder="Bairro">
             </div>
             <div class="form-group">
-                <label for="nomeCategoria">Cidade:</label>
-                <input type="text" class="form-control" name="cidade" 
-                       id="cidade" placeholder="cidade">
+                <label for="nomeCategoria">Rua:</label>
+                <input type="text" class="form-control" name="rua" 
+                       id="rua" placeholder="Rua">
             </div>
+            <div class="form-group">
+                <label for="nomeCategoria">Numero:</label>
+                <input type="number" class="form-control" name="numero" 
+                       id="numero">
+            </div>
+            <div class="form-group">
+                <label for="nomeCategoria">Complemento:</label>
+                <input type="text" class="form-control" name="complemento" 
+                       id="complemento" placeholder="Complemento">
+            </div>
+            
+            
 
             <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
             <button type="cancel" class="btn btn-danger btn-sm">Cancel</button>
@@ -111,24 +138,39 @@ function rua(){
 
 function cidade(){
      cidade = [];
-    $.getJSON('/api/cidade/'+$("#autocomplete").val(), function(data) { 
-             cidade = data['nome'];   
+    $.getJSON('/api/cidade/', function(data) { 
+             for(i=0;i<data.length;i++){
+                  cidade.push(data[i].nome);
+             }  
+             console.log(cidade);
         });          
      return cidade; 
+}
+
+function estado(){
+     estado = [];
+    $.getJSON('/api/estado/', function(data) { 
+        for(i=0;i<data.length;i++){
+                  estado.push(data[i].nome);
+             }  
+             console.log(estado);
+        });          
+     return estado; 
 }
 
 $( "#autocomplete" ).autocomplete({
   source: cep()
 }); 
 
-$( "#rua" ).autocomplete({
-  source: rua()
-}); 
+
 
 $( "#cidade" ).autocomplete({
   source: cidade()
 }); 
 
+$( "#estado" ).autocomplete({
+  source: estado()
+}); 
 
 </script>
 @endsection 
