@@ -35,7 +35,8 @@
 
 
             <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-            <button type="cancel" class="btn btn-danger btn-sm">Cancel</button>
+            <a href="/vendas" type="cancel" class="btn btn-danger btn-sm">Cancel</a>
+            <a href="/prosseguir" class="btn btn-success btn-sm">Prosseguir</a>
         </form>
     </div>
 </div>
