@@ -1,0 +1,8 @@
+div#meus-amigos{ padding:0.2em; overflow:hidden; font-size:1.3em;}	
+		div#meus-amigos span{ width:97%; display:block; padding:0.2em;}
+			div#meus-amigos span a{ float:right;}
+		div#meus-amigos ul{ width:1000px; height:100px; overflow-y:scroll; list-style:none;}
+			div#meus-amigos ul li{ display:inline; float:left;}
+			div#meus-amigos ul li span{ width:65px; height:70px; overflow:hidden;}
+                div#meus-amigos ul li img{ width:100%;} 
+                div.blocos{ width:100%; min-height:50px; margin-bottom:1em; clear:both; background:#fff;}

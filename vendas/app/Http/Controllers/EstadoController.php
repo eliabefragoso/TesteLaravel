@@ -35,7 +35,16 @@ class EstadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $selectEstado = Estado::where('nome',$request->input('nome'))->get();
+        if(count($selectEstado)>0){ 
+              return json_encode("");
+        }else{
+            $estado = new Estado();
+            $estado->nome = $request->input('nome');
+            $estado->save();
+            $Estado = Estado::where('nome',$request->input('nome'))->get();
+            return json_encode($Estado);
+        }
     }
 
     /**
@@ -80,7 +89,7 @@ class EstadoController extends Controller
      */
     public function destroy(Estado $estado)
     {
-        //
+       
     }
 
     public function estadoJson(){

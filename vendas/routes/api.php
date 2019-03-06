@@ -27,6 +27,9 @@ Route::put('/remover/{id}', 'ProdutoController@esvaziarEstoqueJson');
 Route::get('/cep', 'RuaController@cepJson');
 Route::get('/rua/{cep}', 'RuaController@ruaJson');
 Route::get('/cidade','CidadeController@cidadeJson');
+Route::get('/cidade/{estado_id}','CidadeController@cidadeSJson');
 Route::get('/estado','EstadoController@estadoJson');
 
 Route::post('/telefone','TelefoneController@store');
+Route::post('/estado1','EstadoController@store');
+Route::post('/cidade1','CidadeController@store');

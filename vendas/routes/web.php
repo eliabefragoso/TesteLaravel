@@ -22,6 +22,8 @@ Route::get('/vendedores', 'VendedorController@index')->middleware(['auth']);
 Route::get('/vendedores/novo', 'VendedorController@create');
 Route::get('/vendedores/editar/{id}', 'VendedorController@edit');
 Route::get('/vendedores/apagar/{id}', 'VendedorController@destroy');
+Route::get('/rotas/nova', 'RotasController@create');
+
 //post 
 Route::post('/vendedores/{id}', 'VendedorController@update');
 Route::post('/vendedores', 'VendedorController@store');

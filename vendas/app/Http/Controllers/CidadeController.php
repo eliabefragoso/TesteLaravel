@@ -35,7 +35,17 @@ class CidadeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $selectCidade = cidade::where([['nome',$request->input('nome')],['estado_id',$request->input('estado_id')]])->get();
+        if(count($selectCidade)>0){ 
+              return json_encode("");
+        }else{
+            $cidade = new cidade();
+            $cidade->nome = $request->input('nome');
+            $cidade->estado_id = $request->input('estado_id');
+            $cidade->save();
+            $Cidade = cidade::where([['nome',$request->input('nome')],['estado_id',$request->input('estado_id')]])->get();
+            return json_encode($Cidade);
+        }
     }
 
     /**
@@ -85,6 +95,10 @@ class CidadeController extends Controller
 
     public function cidadeJson(){
         $cidades = cidade::all();
+        return json_encode($cidades);
+    }
+    public function cidadeSJson($estado_id){
+        $cidades = cidade::where('estado_id',$estado_id)->get(); 
         return json_encode($cidades);
     }
 }
